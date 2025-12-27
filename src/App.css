@@ -1,0 +1,180 @@
+/* Root styles */
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* App Container */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #485563 0%, #29323c 100%);
+}
+
+/* Header */
+.app-header {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #485563;
+}
+
+.app-header p {
+  margin: 0.5rem 0 0 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-tab {
+  padding: 0.75rem 2rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-tab:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.nav-tab.active {
+  background: white;
+  color: #485563;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 2rem 1rem;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Footer */
+.app-footer {
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Common Button Styles */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #5a6c7d;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #485563;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 85, 99, 0.4);
+}
+
+.btn-delete {
+  background: #ef4444;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+}
+
+/* Input Fields */
+.input-field {
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #5a6c7d;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 2rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .nav-tabs {
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .nav-tab {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .main-content {
+    padding: 1rem 0.75rem;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .app-header p {
+    font-size: 0.85rem;
+  }
+
+  .nav-tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
