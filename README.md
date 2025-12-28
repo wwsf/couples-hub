@@ -107,6 +107,7 @@ npm install
      - `supabase/migrations/002_create_bills_and_grocery.sql`
    - Enable Realtime for tables: `events`, `todos`, `grocery_items`, `bills`
      (Database → Replication → supabase_realtime publication)
+   - See [docs/DATABASE_SETUP.md](docs/DATABASE_SETUP.md) for detailed setup instructions
 
 3. **Configure environment variables**
 ```bash
@@ -197,6 +198,12 @@ MIT License - feel free to use this project for your own couples hub!
 - [ ] Push notifications for bills/events
 - [ ] Dark mode support
 - [ ] Export data functionality
+
+## 📚 Documentation
+
+- [Database Setup Guide](docs/DATABASE_SETUP.md) - Detailed migration instructions
+- [Supabase Setup Guide](docs/SUPABASE_SETUP.md) - Complete Supabase configuration
+- [Database Migrations](supabase/migrations/) - SQL schema files
 
 ---
 
