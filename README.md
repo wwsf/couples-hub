@@ -1,222 +1,203 @@
-# Couples Hub - Productivity Web App
+# 💕 Couples Hub
 
-A beautiful, mobile-responsive web app for couples to manage their shared calendar and todo lists. Built with React, Supabase, and deployable to Vercel.
+A beautiful, real-time productivity web app designed for couples to manage their shared life together. Built with React, Supabase, and deployed on Vercel.
 
-## Features
+![React](https://img.shields.io/badge/React-19.2-blue)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-green)
+![Vite](https://img.shields.io/badge/Vite-Build-purple)
 
-- **Shared Calendar**: Add, view, and manage events together
-- **Todo List**: Create and track shared tasks
-- **Real-time Sync**: Changes sync instantly across devices (with Supabase)
-- **Mobile-Responsive**: Works perfectly on phones, tablets, and desktops
-- **Beautiful Design**: Modern gradient UI with smooth animations
+## ✨ Features
 
-## Tech Stack
+- 📅 **Shared Calendar** - Plan dates, appointments, and events together with dual view (calendar grid + sheet view)
+- ✅ **Todo Lists** - Track shared tasks and responsibilities
+- 🛒 **Grocery Lists** - Collaborative shopping with categories and real-time sync
+- 💳 **Bills Tracker** - Manage utility bills, due dates, and payment status
+- 🔄 **Real-time Sync** - Changes appear instantly across all devices
+- 👥 **Partner System** - Secure invitation-based couple linking
+- 📱 **Mobile Responsive** - Works beautifully on phones, tablets, and desktops
+- 🎨 **Clean Design** - Modern, distraction-free interface
 
-- **Frontend**: React + Vite (fast development)
-- **Backend**: Supabase (database + real-time sync)
-- **Styling**: CSS3 (mobile-first responsive design)
-- **Hosting**: Vercel (free hosting)
+## 🚀 Tech Stack
 
-## Getting Started
+- **Frontend**: React 19 with Vite
+- **Backend**: Supabase (PostgreSQL + Real-time)
+- **Authentication**: Supabase Auth
+- **Security**: Row Level Security (RLS) policies
+- **Hosting**: Vercel
+- **Styling**: Modern CSS3 with responsive design
 
-### Step 1: Run Locally
+## 🏗️ Architecture
 
-The app is already set up! To run it on your computer:
+```
+├── src/
+│   ├── components/       # UI components
+│   │   ├── Calendar.jsx       # Multi-view calendar
+│   │   ├── TodoList.jsx       # Task management
+│   │   ├── GroceryList.jsx    # Shopping lists
+│   │   └── BillsTracker.jsx   # Bill management
+│   ├── context/          # React Context providers
+│   │   ├── AuthContext.jsx    # Authentication & invites
+│   │   └── CoupleContext.jsx  # Couple relationship state
+│   ├── pages/            # Page components
+│   │   ├── HomePage.jsx       # Main app interface
+│   │   ├── LoginPage.jsx      # Auth page
+│   │   └── SignupPage.jsx     # Registration
+│   └── utils/            # Utilities
+│       └── supabase.js        # Supabase client config
+└── supabase/
+    └── migrations/       # Database schema
+        ├── 001_initial_schema.sql
+        └── 002_create_bills_and_grocery.sql
+```
 
+## 📦 Database Schema
+
+- **couple_relationships** - Links partners together with invitation system
+- **events** - Shared calendar events with categories and colors
+- **todos** - Shared task lists
+- **grocery_items** - Categorized shopping lists
+- **bills** - Bill tracking with recurring payments support
+
+All tables are protected with Row Level Security (RLS) policies ensuring couples only see their own data.
+
+## 🎯 Key Features Explained
+
+### Partner Invitation System
+- One partner creates an account and sends an email invitation
+- Other partner signs up and automatically gets linked
+- All data is private to the couple
+
+### Real-time Collaboration
+- Uses Supabase real-time subscriptions
+- Changes sync within milliseconds
+- No page refresh needed
+
+### Bills Tracker
+- Track 9 types of bills (electricity, water, gas, internet, rent, phone, insurance, subscription, other)
+- Recurring billing support (weekly, monthly, quarterly, yearly)
+- Payment status tracking with overdue warnings
+- Amount summaries and filtering
+
+### Grocery List
+- 9 categories with icons (produce, dairy, meat, pantry, frozen, beverages, snacks, household, other)
+- Check off items as you shop
+- Filter by category
+- Clear completed items
+
+## 🛠️ Local Development
+
+### Prerequisites
+- Node.js 18+ installed
+- Supabase account
+- Git
+
+### Setup
+
+1. **Clone the repository**
+```bash
+git clone <your-repo-url>
+cd couples-hub
+npm install
+```
+
+2. **Set up Supabase**
+   - Create a new project at [supabase.com](https://supabase.com)
+   - Run the migration scripts in SQL Editor:
+     - `supabase/migrations/001_initial_schema.sql`
+     - `supabase/migrations/002_create_bills_and_grocery.sql`
+   - Enable Realtime for tables: `events`, `todos`, `grocery_items`, `bills`
+     (Database → Replication → supabase_realtime publication)
+
+3. **Configure environment variables**
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your Supabase credentials:
+```env
+VITE_SUPABASE_URL=your-project-url
+VITE_SUPABASE_ANON_KEY=your-anon-key
+```
+
+4. **Run the development server**
 ```bash
 npm run dev
 ```
 
-Then open your browser to `http://localhost:5173`
+Visit `http://localhost:5173` to see the app.
 
-You'll see the app working with local storage (no database yet). You can add events and todos, but they'll only be saved in your browser.
+## 🚢 Deployment
 
-### Step 2: Set Up Supabase (For Real-time Sync)
+### Deploy to Vercel
 
-To enable real-time syncing between devices, you'll need to set up Supabase:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone)
 
-1. **Create a Supabase account**:
-   - Go to [supabase.com](https://supabase.com)
-   - Sign up for free
+1. Push your code to GitHub
+2. Import the repository to Vercel
+3. Add environment variables:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+4. Deploy!
 
-2. **Create a new project**:
-   - Click "New Project"
-   - Give it a name (e.g., "couples-hub")
-   - Set a database password (save this!)
-   - Wait for the project to set up (takes ~2 minutes)
+## 🔒 Security
 
-3. **Create database tables**:
-   - In your Supabase dashboard, go to "SQL Editor"
-   - Click "New Query"
-   - Copy and paste this SQL code:
+- All database access protected by Row Level Security (RLS)
+- Authentication handled by Supabase Auth
+- Environment variables for sensitive credentials
+- Couples can only access their own data
+- Invitation system prevents unauthorized access
 
-```sql
--- Create events table
-CREATE TABLE events (
-  id BIGSERIAL PRIMARY KEY,
-  title TEXT NOT NULL,
-  date DATE NOT NULL,
-  time TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+## 🎨 Customization
 
--- Create todos table
-CREATE TABLE todos (
-  id BIGSERIAL PRIMARY KEY,
-  text TEXT NOT NULL,
-  completed BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+The app uses a greyish-blue gradient theme. To customize:
 
--- Enable real-time for both tables
-ALTER PUBLICATION supabase_realtime ADD TABLE events;
-ALTER PUBLICATION supabase_realtime ADD TABLE todos;
-```
+- **Colors**: Edit CSS variables in `src/App.css`
+- **Gradient**: Modify `background: linear-gradient(135deg, #485563 0%, #29323c 100%)`
+- **Button styles**: Update `.btn-primary` classes
 
-   - Click "Run" to create the tables
+## 📱 Mobile Support
 
-4. **Get your API credentials**:
-   - Go to Project Settings (gear icon) → API
-   - Copy your "Project URL"
-   - Copy your "anon public" key
+The app is fully responsive and tested on:
+- iOS Safari
+- Android Chrome
+- Desktop browsers (Chrome, Firefox, Safari, Edge)
 
-5. **Add credentials to your app**:
-   - Create a file called `.env` in your project folder
-   - Copy the contents from `.env.example` and fill in your values:
+## 🐛 Troubleshooting
 
-```
-VITE_SUPABASE_URL=your-project-url-here
-VITE_SUPABASE_ANON_KEY=your-anon-key-here
-```
+**"Could not find the table" error**
+- Run the database migrations in Supabase SQL Editor
+- Check that tables were created: `SELECT * FROM information_schema.tables WHERE table_schema = 'public'`
 
-6. **Restart your dev server**:
-   - Stop the server (Ctrl+C)
-   - Run `npm run dev` again
+**Real-time not working**
+- Enable Realtime for all tables in Database → Replication
+- Check browser console for subscription errors
 
-Now your app is connected to Supabase and will sync in real-time!
+**Login issues**
+- Verify Supabase URL and anon key in `.env`
+- Check email confirmation settings in Supabase Auth
 
-### Step 3: Deploy to Vercel (Free Hosting)
+## 🤝 Contributing
 
-To make your app accessible from anywhere:
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest new features
+- Submit pull requests
 
-1. **Push code to GitHub**:
-   - Create a new repository on GitHub
-   - Run these commands:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin your-github-repo-url
-   git push -u origin main
-   ```
+## 📄 License
 
-2. **Deploy to Vercel**:
-   - Go to [vercel.com](https://vercel.com)
-   - Sign up with GitHub
-   - Click "New Project"
-   - Import your GitHub repository
-   - Add your environment variables:
-     - `VITE_SUPABASE_URL`
-     - `VITE_SUPABASE_ANON_KEY`
-   - Click "Deploy"
+MIT License - feel free to use this project for your own couples hub!
 
-Your app will be live in ~2 minutes at a URL like `your-app.vercel.app`!
+## 💡 Future Ideas
 
-## Project Structure
+- [ ] Meal planning feature
+- [ ] Photo sharing gallery
+- [ ] Expense splitting calculator
+- [ ] Date night idea generator
+- [ ] Shared notes/journal
+- [ ] Push notifications for bills/events
+- [ ] Dark mode support
+- [ ] Export data functionality
 
-Here's what each file does:
+---
 
-```
-couples-hub/
-├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── Calendar.jsx     # Calendar component (add/view/delete events)
-│   │   └── TodoList.jsx     # Todo list component (add/complete/delete todos)
-│   │
-│   ├── styles/              # CSS styling files
-│   │   ├── Calendar.css     # Styles for calendar component
-│   │   └── TodoList.css     # Styles for todo list component
-│   │
-│   ├── utils/               # Utility functions
-│   │   └── supabase.js      # Supabase client configuration
-│   │
-│   ├── App.jsx              # Main app component (navigation, layout)
-│   ├── App.css              # Global app styles
-│   └── main.jsx             # App entry point
-│
-├── .env.example             # Example environment variables file
-├── package.json             # Project dependencies
-└── vite.config.js           # Vite configuration
-```
-
-### Key Files Explained:
-
-- **App.jsx**: The main component that holds everything together. It manages which tab (Calendar or Todos) is shown and provides the overall layout.
-
-- **Calendar.jsx**: Handles all calendar functionality - adding events, displaying them, and deleting them. Connects to Supabase to save data.
-
-- **TodoList.jsx**: Manages the todo list - adding tasks, marking them complete, and deleting them. Also connects to Supabase.
-
-- **supabase.js**: Sets up the connection to your Supabase database using your API credentials.
-
-- **CSS files**: Make everything look beautiful and work on mobile devices.
-
-## How It Works
-
-### Adding Events/Todos:
-1. User types in the form
-2. Clicks "Add" button
-3. App saves to Supabase database
-4. Component updates to show new item
-5. Other devices get updated automatically (real-time sync!)
-
-### Data Flow:
-```
-User Input → React Component → Supabase Database → Real-time Sync → All Devices
-```
-
-## Customization Ideas
-
-Want to personalize your app? Try these:
-
-1. **Change colors**: Edit the gradient in `src/App.css` (line 13)
-2. **Add categories**: Add a category field to events/todos
-3. **Add photos**: Allow uploading event photos
-4. **Add reminders**: Set up email notifications
-5. **Add notes**: Create a shared notes section
-
-## Troubleshooting
-
-**App won't start?**
-- Make sure you ran `npm install` first
-- Check that Node.js is installed: `node --version`
-
-**Data not saving?**
-- Check your `.env` file has the correct Supabase credentials
-- Make sure you created the database tables
-- Check the browser console for errors (F12)
-
-**Not syncing between devices?**
-- Verify real-time is enabled in Supabase
-- Both devices need to be connected to internet
-
-## Next Steps
-
-Once you're comfortable with the basics, you can:
-
-1. Add user authentication (so each couple has their own data)
-2. Add more features (shopping lists, meal planner, etc.)
-3. Customize the design to your taste
-4. Add notifications and reminders
-5. Create a mobile app version with React Native
-
-## Need Help?
-
-- **React docs**: [react.dev](https://react.dev)
-- **Supabase docs**: [supabase.com/docs](https://supabase.com/docs)
-- **Vite docs**: [vitejs.dev](https://vitejs.dev)
-
-## License
-
-Free to use and modify as you wish!
+**Built with ❤️ for couples who plan together, stay together**

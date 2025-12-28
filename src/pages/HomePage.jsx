@@ -3,6 +3,8 @@ import { useAuth } from '../context/AuthContext'
 import { useCouple } from '../context/CoupleContext'
 import Calendar from '../components/Calendar'
 import TodoList from '../components/TodoList'
+import GroceryList from '../components/GroceryList'
+import BillsTracker from '../components/BillsTracker'
 import './HomePage.css'
 
 function HomePage() {
@@ -132,12 +134,26 @@ function HomePage() {
         >
           ✅ Todos
         </button>
+        <button
+          className={`nav-tab ${activeTab === 'groceries' ? 'active' : ''}`}
+          onClick={() => setActiveTab('groceries')}
+        >
+          🛒 Groceries
+        </button>
+        <button
+          className={`nav-tab ${activeTab === 'bills' ? 'active' : ''}`}
+          onClick={() => setActiveTab('bills')}
+        >
+          💳 Bills
+        </button>
       </nav>
 
       {/* Main Content */}
       <main className="main-content">
         {activeTab === 'calendar' && <Calendar />}
         {activeTab === 'todos' && <TodoList />}
+        {activeTab === 'groceries' && <GroceryList />}
+        {activeTab === 'bills' && <BillsTracker />}
       </main>
 
       {/* Footer */}
