@@ -48,13 +48,27 @@ function HomePage() {
         <div className="header-left">
           <h1>Couples Hub</h1>
           {isActive && partner && (
-            <div className="partner-badge">
+            <div className="partner-badge partner-connected">
               <span className="heart-icon">❤️</span>
               <span>Connected with {partner.display_name || partner.email.split('@')[0]}</span>
             </div>
           )}
+          {!isActive && !loading && (
+            <div className="partner-badge partner-solo">
+              <span className="solo-icon">👤</span>
+              <span>Solo mode</span>
+            </div>
+          )}
         </div>
         <div className="header-right">
+          {!isActive && !loading && (
+            <button
+              onClick={() => setShowInviteForm(true)}
+              className="btn-invite-partner"
+            >
+              + Invite Partner
+            </button>
+          )}
           <button onClick={handleSignOut} className="btn-signout">
             Sign Out
           </button>
@@ -93,56 +107,51 @@ function HomePage() {
         </button>
       </nav>
 
-      {/* Partner Setup Modal */}
-      {(isPending || !couple) && (
+      {/* Partner Invite Modal - Only shown when user clicks invite button */}
+      {showInviteForm && !isActive && (
         <div className="setup-modal">
           <div className="setup-content">
-            {isPending ? (
-              <>
-                <h3>👫 Invite Your Partner</h3>
-                <p>Share your Couples Hub with your partner to get started!</p>
-                {!showInviteForm ? (
-                  <button
-                    onClick={() => setShowInviteForm(true)}
-                    className="btn btn-primary"
-                  >
-                    Send Invitation
-                  </button>
-                ) : (
-                  <form onSubmit={handleInvite} className="invite-form-inline">
-                    <input
-                      type="email"
-                      value={partnerEmail}
-                      onChange={(e) => setPartnerEmail(e.target.value)}
-                      placeholder="Partner's email"
-                      required
-                      className="input-field"
-                    />
-                    <button type="submit" className="btn btn-primary">
-                      Send
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setShowInviteForm(false)}
-                      className="btn-cancel"
-                    >
-                      Cancel
-                    </button>
-                  </form>
-                )}
-                {inviteMessage && (
-                  <div className="invite-message">{inviteMessage}</div>
-                )}
-              </>
-            ) : (
-              <>
-                <h3>⚠️ Setup Required</h3>
-                <p>Your couple relationship needs to be initialized.</p>
-                <button onClick={handleCreateCouple} className="btn btn-primary">
-                  Initialize Couple Profile
-                </button>
-              </>
+            <h3>👫 Invite Your Partner</h3>
+            <p>Share your Couples Hub with your partner. They can sign up using the email you invite them with!</p>
+            <form onSubmit={handleInvite} className="invite-form-inline">
+              <input
+                type="email"
+                value={partnerEmail}
+                onChange={(e) => setPartnerEmail(e.target.value)}
+                placeholder="Partner's email"
+                required
+                className="input-field"
+              />
+              <button type="submit" className="btn btn-primary">
+                Send Invitation
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowInviteForm(false)
+                  setInviteMessage(null)
+                }}
+                className="btn-cancel"
+              >
+                Cancel
+              </button>
+            </form>
+            {inviteMessage && (
+              <div className="invite-message">{inviteMessage}</div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Setup Modal - Only for users without couple profile */}
+      {!couple && !loading && (
+        <div className="setup-modal">
+          <div className="setup-content">
+            <h3>Welcome to Couples Hub! 👋</h3>
+            <p>Let's get you started. You can use the app solo or invite your partner later.</p>
+            <button onClick={handleCreateCouple} className="btn btn-primary">
+              Get Started
+            </button>
           </div>
         </div>
       )}

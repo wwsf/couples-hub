@@ -32,11 +32,19 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #fef3f2;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.85rem;
+}
+
+.partner-badge.partner-connected {
+  background: #fef3f2;
   color: #d97706;
+}
+
+.partner-badge.partner-solo {
+  background: #f0f9ff;
+  color: #0369a1;
 }
 
 .heart-icon {
@@ -47,6 +55,24 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.btn-invite-partner {
+  padding: 0.5rem 1rem;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.btn-invite-partner:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(220, 38, 38, 0.25);
 }
 
 .btn-signout {
@@ -145,12 +171,14 @@
   margin: 0 0 0.75rem 0;
   font-size: 1.5rem;
   color: #1f2937;
+  text-align: center;
 }
 
 .setup-content p {
   margin: 0 0 1.5rem 0;
   color: #6b7280;
   line-height: 1.5;
+  text-align: center;
 }
 
 .invite-form-inline {
