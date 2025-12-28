@@ -1,0 +1,98 @@
+.invite-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+  padding: 2rem 1rem;
+}
+
+.invite-container {
+  width: 100%;
+  max-width: 450px;
+}
+
+.invite-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.invite-header h1 {
+  font-size: 4rem;
+  margin: 0 0 1rem 0;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.invite-header h2 {
+  font-size: 2.5rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.invite-header p {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+
+.invite-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.invite-card h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  color: #c06c84;
+  text-align: center;
+}
+
+.invite-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.invite-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .invite-page {
+    padding: 1rem;
+  }
+
+  .invite-header h1 {
+    font-size: 3rem;
+  }
+
+  .invite-header h2 {
+    font-size: 2rem;
+  }
+
+  .invite-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .invite-card h3 {
+    font-size: 1.25rem;
+  }
+}

@@ -1,28 +1,37 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../utils/supabase'
+import { useAuth } from '../context/AuthContext'
+import { useCouple } from '../context/CoupleContext'
 import '../styles/TodoList.css'
 
 function TodoList() {
+  const { user } = useAuth()
+  const { coupleId, isActive } = useCouple()
   const [todos, setTodos] = useState([])
   const [newTodo, setNewTodo] = useState('')
 
-  // Fetch todos when component loads
+  // Fetch todos when component loads or couple changes
   useEffect(() => {
-    fetchTodos()
-  }, [])
+    if (coupleId) {
+      fetchTodos()
+    }
+  }, [coupleId])
 
   // Get all todos from database
   const fetchTodos = async () => {
+    if (!coupleId) return
+
     try {
       const { data, error } = await supabase
         .from('todos')
         .select('*')
+        .eq('couple_id', coupleId)
         .order('created_at', { ascending: false })
 
       if (error) throw error
       setTodos(data || [])
     } catch (error) {
-      console.log('Note: Connect Supabase to fetch todos', error.message)
+      console.log('Error fetching todos:', error.message)
     }
   }
 
@@ -35,10 +44,20 @@ function TodoList() {
       return
     }
 
+    if (!coupleId || !user) {
+      alert('Unable to add todo. Please try refreshing the page.')
+      return
+    }
+
     try {
       const { data, error } = await supabase
         .from('todos')
-        .insert([{ text: newTodo, completed: false }])
+        .insert([{
+          text: newTodo,
+          completed: false,
+          couple_id: coupleId,
+          created_by: user.id
+        }])
         .select()
 
       if (error) throw error
@@ -46,10 +65,8 @@ function TodoList() {
       setTodos([...data, ...todos])
       setNewTodo('')
     } catch (error) {
-      console.log('Note: Connect Supabase to add todos', error.message)
-      // For now, add locally without database
-      setTodos([{ id: Date.now(), text: newTodo, completed: false }, ...todos])
-      setNewTodo('')
+      console.log('Error adding todo:', error.message)
+      alert(`Failed to add todo: ${error.message}`)
     }
   }
 
