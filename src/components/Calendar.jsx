@@ -345,14 +345,18 @@ function Calendar() {
               >
                 <div className="day-number">{date.getDate()}</div>
                 <div className="day-events">
-                  {dayEvents.slice(0, 3).map(event => (
+                  {dayEvents.slice(0, 3).map((event) => (
                     <div
                       key={event.id}
-                      className={`event-dot event-${event.color}`}
+                      className={`event-pill event-${event.color} ${event.created_by === user?.id ? 'partner-a' : 'partner-b'}`}
                       title={event.title}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleEventClick(event)
+                      }}
                     >
-                      {event.title.substring(0, 15)}
-                      {event.title.length > 15 ? '...' : ''}
+                      {event.title.substring(0, 12)}
+                      {event.title.length > 12 ? '...' : ''}
                     </div>
                   ))}
                   {dayEvents.length > 3 && (
@@ -709,14 +713,35 @@ function Calendar() {
 
   return (
     <div className="calendar-container">
-      <div className="calendar-top-bar">
-        <h2>Our Calendar</h2>
-        <button
-          onClick={() => setShowEventForm(!showEventForm)}
-          className="btn btn-primary"
-        >
-          {showEventForm ? 'Cancel' : '+ Add Event'}
-        </button>
+      <div className="calendar-header-section">
+        <div className="calendar-title-row">
+          <h2>Our Calendar</h2>
+          <button
+            onClick={() => setShowEventForm(!showEventForm)}
+            className="btn btn-add-event"
+          >
+            + Add Event
+          </button>
+        </div>
+
+        <div className="view-controls-row">
+          {/* View Mode Toggle */}
+          <div className="view-toggle-group">
+            <button
+              className={`view-toggle-btn ${viewMode === 'calendar' ? 'active' : ''}`}
+              onClick={() => setViewMode('calendar')}
+            >
+              📅 Calendar
+            </button>
+            <button
+              className={`view-toggle-btn ${viewMode === 'sheet' ? 'active' : ''}`}
+              onClick={() => setViewMode('sheet')}
+            >
+              📋 Sheet
+            </button>
+          </div>
+
+        </div>
       </div>
 
       {/* Event Form (collapsible) */}
@@ -800,47 +825,6 @@ function Calendar() {
           <button type="submit" className="btn btn-primary btn-block">Add Event</button>
         </form>
       )}
-
-      {/* View Controls */}
-      <div className="view-controls">
-        <div className="view-mode-toggle">
-          <button
-            className={`toggle-btn ${viewMode === 'calendar' ? 'active' : ''}`}
-            onClick={() => setViewMode('calendar')}
-          >
-            📅 Calendar
-          </button>
-          <button
-            className={`toggle-btn ${viewMode === 'sheet' ? 'active' : ''}`}
-            onClick={() => setViewMode('sheet')}
-          >
-            📋 Sheet
-          </button>
-        </div>
-
-        {viewMode === 'calendar' && (
-          <div className="calendar-view-toggle">
-            <button
-              className={`toggle-btn ${calendarView === 'month' ? 'active' : ''}`}
-              onClick={() => setCalendarView('month')}
-            >
-              Month
-            </button>
-            <button
-              className={`toggle-btn ${calendarView === 'week' ? 'active' : ''}`}
-              onClick={() => setCalendarView('week')}
-            >
-              Week
-            </button>
-            <button
-              className={`toggle-btn ${calendarView === 'day' ? 'active' : ''}`}
-              onClick={() => setCalendarView('day')}
-            >
-              Day
-            </button>
-          </div>
-        )}
-      </div>
 
       {/* Render appropriate view */}
       {viewMode === 'calendar' && calendarView === 'month' && renderMonthView()}

@@ -45,108 +45,107 @@ function HomePage() {
     <div className="home-page">
       {/* Header */}
       <header className="app-header">
-        <div className="header-content">
+        <div className="header-left">
           <h1>Couples Hub</h1>
-          <div className="header-actions">
-            <span className="user-email">{user?.email}</span>
-            <button onClick={handleSignOut} className="btn-signout">
-              Sign Out
-            </button>
-          </div>
+          {isActive && partner && (
+            <div className="partner-badge">
+              <span className="heart-icon">❤️</span>
+              <span>Connected with {partner.display_name || partner.email.split('@')[0]}</span>
+            </div>
+          )}
+        </div>
+        <div className="header-right">
+          <button onClick={handleSignOut} className="btn-signout">
+            Sign Out
+          </button>
         </div>
       </header>
 
-      {/* Partner Status */}
-      {loading ? (
-        <div className="partner-status loading">
-          <p>Loading partner info...</p>
-        </div>
-      ) : isPending ? (
-        <div className="partner-status pending">
-          <div className="status-content">
-            <h3>👫 Invite Your Partner</h3>
-            <p>Share your Couples Hub with your partner to get started!</p>
-
-            {!showInviteForm ? (
-              <button
-                onClick={() => setShowInviteForm(true)}
-                className="btn btn-primary"
-              >
-                Send Invitation
-              </button>
-            ) : (
-              <form onSubmit={handleInvite} className="invite-form-inline">
-                <input
-                  type="email"
-                  value={partnerEmail}
-                  onChange={(e) => setPartnerEmail(e.target.value)}
-                  placeholder="Partner's email"
-                  required
-                  className="input-field"
-                />
-                <button type="submit" className="btn btn-primary">
-                  Send
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowInviteForm(false)}
-                  className="btn-cancel"
-                >
-                  Cancel
-                </button>
-              </form>
-            )}
-
-            {inviteMessage && (
-              <div className="invite-message">
-                {inviteMessage}
-              </div>
-            )}
-          </div>
-        </div>
-      ) : isActive && partner ? (
-        <div className="partner-status active">
-          <p>💕 Connected with {partner.display_name || partner.email}</p>
-        </div>
-      ) : !couple ? (
-        <div className="partner-status pending">
-          <div className="status-content">
-            <h3>⚠️ Setup Required</h3>
-            <p>Your couple relationship needs to be initialized.</p>
-            <button onClick={handleCreateCouple} className="btn btn-primary">
-              Initialize Couple Profile
-            </button>
-          </div>
-        </div>
-      ) : null}
-
-      {/* Navigation Tabs */}
-      <nav className="nav-tabs">
+      {/* Horizontal Navigation */}
+      <nav className="horizontal-nav">
         <button
-          className={`nav-tab ${activeTab === 'calendar' ? 'active' : ''}`}
+          className={`nav-item ${activeTab === 'calendar' ? 'active' : ''}`}
           onClick={() => setActiveTab('calendar')}
         >
-          📅 Calendar
+          <span className="nav-icon">📅</span>
+          Calendar
         </button>
         <button
-          className={`nav-tab ${activeTab === 'todos' ? 'active' : ''}`}
+          className={`nav-item ${activeTab === 'todos' ? 'active' : ''}`}
           onClick={() => setActiveTab('todos')}
         >
-          ✅ Todos
+          <span className="nav-icon">📋</span>
+          Todos
         </button>
         <button
-          className={`nav-tab ${activeTab === 'groceries' ? 'active' : ''}`}
+          className={`nav-item ${activeTab === 'groceries' ? 'active' : ''}`}
           onClick={() => setActiveTab('groceries')}
         >
-          🛒 Groceries
+          <span className="nav-icon">🛒</span>
+          Groceries
         </button>
         <button
-          className={`nav-tab ${activeTab === 'bills' ? 'active' : ''}`}
+          className={`nav-item ${activeTab === 'bills' ? 'active' : ''}`}
           onClick={() => setActiveTab('bills')}
         >
-          💳 Bills
+          <span className="nav-icon">📄</span>
+          Bills
         </button>
       </nav>
+
+      {/* Partner Setup Modal */}
+      {(isPending || !couple) && (
+        <div className="setup-modal">
+          <div className="setup-content">
+            {isPending ? (
+              <>
+                <h3>👫 Invite Your Partner</h3>
+                <p>Share your Couples Hub with your partner to get started!</p>
+                {!showInviteForm ? (
+                  <button
+                    onClick={() => setShowInviteForm(true)}
+                    className="btn btn-primary"
+                  >
+                    Send Invitation
+                  </button>
+                ) : (
+                  <form onSubmit={handleInvite} className="invite-form-inline">
+                    <input
+                      type="email"
+                      value={partnerEmail}
+                      onChange={(e) => setPartnerEmail(e.target.value)}
+                      placeholder="Partner's email"
+                      required
+                      className="input-field"
+                    />
+                    <button type="submit" className="btn btn-primary">
+                      Send
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowInviteForm(false)}
+                      className="btn-cancel"
+                    >
+                      Cancel
+                    </button>
+                  </form>
+                )}
+                {inviteMessage && (
+                  <div className="invite-message">{inviteMessage}</div>
+                )}
+              </>
+            ) : (
+              <>
+                <h3>⚠️ Setup Required</h3>
+                <p>Your couple relationship needs to be initialized.</p>
+                <button onClick={handleCreateCouple} className="btn btn-primary">
+                  Initialize Couple Profile
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="main-content">
